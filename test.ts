@@ -8,7 +8,7 @@ import {
   assertSpyCall,
   assertSpyCalls,
   spy,
-} from "jsr:@std/testing@^1.0.13/mock";
+} from "jsr:@std/testing@^1.0.14/mock";
 import {
   cached,
   debatch,
