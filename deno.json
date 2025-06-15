@@ -1,0 +1,15 @@
+{
+  "$schema": "https://raw.githubusercontent.com/denoland/deno/refs/heads/main/cli/schemas/config-file.v1.json",
+  "name": "@nyoon/reactivity",
+  "version": "0.1.0",
+  "exports": "./mod.ts",
+  "lint": {
+    "rules": {
+      "tags": ["recommended"],
+      "exclude": ["ban-types", "no-cond-assign", "no-explicit-any"]
+    }
+  },
+  "tasks": {
+    "test": "deno test --allow-all --no-check --parallel --doc"
+  }
+}
