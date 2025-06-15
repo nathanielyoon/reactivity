@@ -253,14 +253,15 @@ function encached<A>(this: CachedNode<A>) {
 let z = 0, size = 0, depth = 0;
 let point: ReactiveNode | undefined, scope: ScoperNode | undefined;
 /** Manually sets the current subscriber (for testing). */
-export const set_point = (to?: ReactiveNode) => {
+export const set_point = (to?: ReactiveNode): ReactiveNode | undefined => {
   const prev = point;
   return point = to, prev;
 };
 /** Starts a batched update, suspending recomputation until `debatch`ed. */
-export const enbatch = () => ++depth;
+export const enbatch = (): number => ++depth;
 /** Ends a batched update (if any), running all pending computations. */
-export const debatch = () => !--depth && all();
+export const debatch = (): false | void => !--depth && all();
+/** Reactive value. */
 export type Signal<A> = { (): A; <B extends A>(value: B): B };
 /** Creates a reactive value. */
 export const signal = ((initial?: unknown) =>
@@ -277,6 +278,7 @@ export const signal = ((initial?: unknown) =>
     <A>(): Signal<A | undefined>;
     <A>(initial: A): Signal<A>;
   };
+/** Derived computation. */
 export type Cached<A> = () => A;
 /** Creates a derived computation. */
 export const cached =
@@ -295,7 +297,7 @@ export const cached =
       <A>(get: (old: A) => A, initial: A): Cached<A>;
     };
 /** Creates a side-effect. */
-export const effect = (run: () => void) => {
+export const effect = (run: () => void): () => void => {
   const node: EffectNode = {
     kind: Kind.EFFECT,
     head: undefined,
@@ -316,7 +318,7 @@ export const effect = (run: () => void) => {
   return dispose.bind(node);
 };
 /** Creates a disposable effect group. */
-export const scoper = (run: () => void) => {
+export const scoper = (run: () => void): () => void => {
   const node: ScoperNode = {
     kind: Kind.SCOPER,
     head: undefined,
